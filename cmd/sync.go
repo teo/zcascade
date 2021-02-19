@@ -15,11 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package app
+package cmd
 
-const (
-	NAME             = "zcascade"
-	PRETTY_SHORTNAME = "zcascade"
-	PRETTY_FULLNAME  = "A cascaded replication tool for ZFS datasets"
-	VERSION          = "0.1"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+	"github.com/teo/zcascade/cmd/replication"
 )
+
+var syncCmd = &cobra.Command{
+	Use:   "sync",
+	Aliases: []string{},
+	Short: fmt.Sprintf("synchronize dataset to inventory"),
+	Long: `The sync command performs a cascaded replication of a given dataset, including all its snapshots.`,
+	Run: func(*cobra.Command, []string) {
+		const nTargets = 100
+		targets := make([]string, nTargets)
+		for i := 0; i < nTargets; i++ {
+			targets[i] = fmt.Sprintf("target-%d", i)
+		}
+		replication.Sync("mySource", targets)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(syncCmd)
+}

@@ -25,18 +25,21 @@ import (
 	"path"
 
 	"github.com/mitchellh/go-homedir"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/teo/zcascade/app"
+	"github.com/teo/zcascade/common/logger"
 )
+
+var log = logger.New(logrus.StandardLogger(), "zcascade")
 
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   app.NAME,
-	Short: app.PRETTY_FULLNAME,
+	Short: app.PRETTY_SHORTNAME,
 	Long: fmt.Sprintf(`%s is a command line program for fast, large scale ZFS dataset replication.
 
 The following options are always available with any %s command.

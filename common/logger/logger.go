@@ -15,11 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package app
+package logger
 
-const (
-	NAME             = "zcascade"
-	PRETTY_SHORTNAME = "zcascade"
-	PRETTY_FULLNAME  = "A cascaded replication tool for ZFS datasets"
-	VERSION          = "0.1"
+import (
+	"github.com/sirupsen/logrus"
 )
+
+type Log struct {
+	logrus.Entry
+}
+
+func (logger *Log) WithPrefix(prefix string) *logrus.Entry {
+	return logger.WithField("prefix", prefix)
+}
+
+func New(baseLogger *logrus.Logger, defaultPrefix string) *Log {
+	logger := new(Log)
+	logger.Logger = baseLogger
+	logger.Data = make(logrus.Fields, 5)
+	logger.Data["prefix"] = defaultPrefix
+	return logger
+}
