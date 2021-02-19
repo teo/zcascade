@@ -15,12 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package main
+package app
 
-import (
-	"github.com/teo/zcascade/cmd"
+const (
+	NAME             = "zcascade"
+	PRETTY_SHORTNAME = "zcascade"
+	PRETTY_FULLNAME  = "zcascade"
+	VERSION          = "0.1"
 )
-
-func main() {
-	cmd.Execute()
-}
